@@ -24,7 +24,7 @@ The Account System is completly Anonymous, no IP's are logged nor are any person
 Requirements:
 
 ```sh
-webserver :)
+webserver :) and Mysql db
 ```
 
 Setup 
