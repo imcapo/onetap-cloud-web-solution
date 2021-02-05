@@ -30,7 +30,7 @@ webserver :)
 Setup 
 - Upload all files to ur document root
 - import the given db setup to ur phpmyadmin (capo.sql)
-- change all 3 DB creds in db.php in the root
+- change all 3 DB creds and Onetap API Creds in db.php in the root
 - set the environement variables in (environement.php) -> You have to create a google recaptcha and insert these variabes https://www.google.com/recaptcha/admin/
 - Register youre account and change youre rank in Users table to 100 so you have admin (admin panel) access
 - Now feel free to use youre admin panel to create products and news etc.
