@@ -110,7 +110,7 @@ function getName($n) {
         if ($result) {
             echo '<center><div class="form">
             <h3 style="margin-top: 300px; color: white;">You are registered successfully. <3</h3><br/>
-            <h3 style="color: white;><strong>USERID: '.$user2.'</strong></h3><br/>
+            <h3 style="color: white;">USERID: <strong>'.$user2.'</strong></h3><br/>
             <p style="color: white; class="link">Click here to <a href="index.php">Login</a></p>
             </div></center>';
         } else {
