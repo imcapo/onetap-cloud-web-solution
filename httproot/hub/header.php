@@ -50,10 +50,83 @@ $query = "SELECT * FROM aplans WHERE userid = '$user'";
 if ($result = $mysqli->query($query)) {
     while ($row = $result->fetch_assoc()) {
         $end = $row["expiry"];
+        $type = $row["type"];
+        $otuser = $row["otuser"];
         $t = time();
         if ($t > $end) {
           $sql3 = "DELETE FROM aplans WHERE userid='$user'";
           if(mysqli_query($con, $sql3)){
+
+            if ($type == "script") {
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://api.onetap.com/cloud/scripts/'.$otid.'/subscriptions/?user_id=' . $otuser,
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'DELETE',
+              CURLOPT_POSTFIELDS => 'application%2Fx-www-form-urlencoded=&',
+              CURLOPT_HTTPHEADER => array(
+                'X-Api-Id: ' . $XApiId,
+                'X-Api-Secret: ' . $XApiSecret,
+                'X-Api-Key: ' . $XApiKey,
+                'Content-Type: application/x-www-form-urlencoded'
+              ),
+            ));
+            
+            $response = curl_exec($curl);
+            $data = json_decode($response);
+            
+            //$invitecode = $data->invite->code;
+            //$invite = "https://www.onetap.com/account/scripts/invites/" . $invitecode . "/accept";
+            curl_close($curl);
+            
+            die('<div class="container">
+            <div class="con4" style="height: 120px; width: 1000px;">
+            <h3 style="color: white; margin-top: 16px;">Youre Subscription has expired!</h3>
+            <a href="index.php">Home</a>
+            </div>
+            </div>');
+          } else {
+            $curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.onetap.com/cloud/configs/'.$otid.'/subscriptions/?user_id=' . $otuser,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => 'application%2Fx-www-form-urlencoded=&',
+  CURLOPT_HTTPHEADER => array(
+    'X-Api-Id: ' . $XApiId,
+    'X-Api-Secret: ' . $XApiSecret,
+    'X-Api-Key: ' . $XApiKey,
+    'Content-Type: application/x-www-form-urlencoded'
+  ),
+));
+
+$response = curl_exec($curl);
+$data = json_decode($response);
+
+//$invitecode = $data->invite->code;
+//$invite = "https://www.onetap.com/account/configs/invites/" . $invitecode . "/accept";
+curl_close($curl); 
+
+die('<div class="container">
+<div class="con4" style="height: 120px; width: 1000px;">
+<h3 style="color: white; margin-top: 16px;">Youre Subscription has expired!</h3>
+<a href="index.php">Home</a>
+</div>
+</div>');
+
+          }
         }
         }
     }
