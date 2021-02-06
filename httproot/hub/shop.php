@@ -83,7 +83,12 @@ select {
 <h3 style="color: white; margin-top: 20px;">Shop</h3>
 <p class="hi" style="margin-top: 20px;">Available Credits: <strong><?php echo htmlspecialchars($credits); ?></strong></p>
 
-<center>	<div class="length range__slider" data-min="1" data-max="12">
+<center>
+<br>
+<div class="form-group">
+    <input class="form-field" id="otuser" name="otuser" type="text" placeholder="Enter Onetap UserID!" required>
+</div>
+	<div class="length range__slider" data-min="1" data-max="12">
 		<div class="length__title field-title" data-length='1'>Months: </div>
 		<input id="slider1" type="range" name="time" min="1" max="12" value="1" onchange="price()" />
     </div></center>
@@ -134,6 +139,7 @@ function buy() {
 			$user = $_SESSION['userid'];
             $time = $_POST['time'];
             $net = $_POST['slct'];
+            $otuser = $_POST['otuser'];
 
             $query2 = "SELECT * FROM products WHERE name = '$net'";
  
@@ -174,7 +180,7 @@ if ($result = $mysqli->query($query2)) {
                     
                     $lenght = 2628000 * $time;
                     $end = time() + $lenght;
-					$sql2 = "INSERT INTO aplans (userid, sub, type, expiry) VALUES ('$user', '1', '$name', '$end')";
+					$sql2 = "INSERT INTO aplans (userid, sub, type, expiry, otuser) VALUES ('$user', '1', '$name', '$end', '$otuser')";
 					if(mysqli_query($con, $sql2)) {   
 $timestamp = date("c", strtotime("now"));
 $q = $rows + 1;
@@ -281,7 +287,7 @@ if ($type == "config") {
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://api.onetap.com/cloud/configs/'.$otid.'/invites/?max_age=5&max_uses=1',
+  CURLOPT_URL => 'https://api.onetap.com/cloud/configs/'.$otid.'/subscriptions/?user_id=' . $otuser,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -291,9 +297,9 @@ curl_setopt_array($curl, array(
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_POSTFIELDS => 'application%2Fx-www-form-urlencoded=&',
   CURLOPT_HTTPHEADER => array(
-    'X-Api-Id: ee7afc2b23d14fac42d4f70d7b0d0712',
-    'X-Api-Secret: 262bb53c99b81fd8921029df4e602dcf2e9a26ae8211d9e730be94412521cc4c',
-    'X-Api-Key: wiZnN48EjUatI9L_ByX0nPOYNJ6sgoS_',
+    'X-Api-Id: ' . $XApiId,
+    'X-Api-Secret: ' . $XApiSecret,
+    'X-Api-Key: ' . $XApiKey,
     'Content-Type: application/x-www-form-urlencoded'
   ),
 ));
@@ -301,25 +307,16 @@ curl_setopt_array($curl, array(
 $response = curl_exec($curl);
 $data = json_decode($response);
 
-$invitecode = $data->invite->code;
-$invite = "https://www.onetap.com/account/configs/invites/" . $invitecode . "/accept";
+//$invitecode = $data->invite->code;
+//$invite = "https://www.onetap.com/account/configs/invites/" . $invitecode . "/accept";
 curl_close($curl); 
 
 die('<div class="container">
 <div class="con4" style="height: 120px; width: 1000px;">
-<h3 style="color: white; margin-top: 16px;">ATTENTION! Use it now or it expires: </h3> <input type="text" value="'.$invite.'" id="myInput">
-<button onclick="myFunction()">Copy text</button><br>
+<h3 style="color: white; margin-top: 16px;">Youre Subscription has been added!</h3>
 <a href="index.php">Home</a>
 </div>
-</div> <script>
-function myFunction() {
-  var copyText = document.getElementById("myInput");
-  copyText.select();
-  copyText.setSelectionRange(0, 99999)
-  document.execCommand("copy");
-  alert("Copied the text: " + copyText.value);
-}
-</script>');
+</div>');
 									        
 					} else {
 
@@ -327,7 +324,7 @@ function myFunction() {
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://api.onetap.com/cloud/scripts/'.$otid.'/invites/?max_age=5&max_uses=1',
+              CURLOPT_URL => 'https://api.onetap.com/cloud/scripts/'.$otid.'/subscriptions/?user_id=' . $otuser,
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -347,25 +344,16 @@ function myFunction() {
             $response = curl_exec($curl);
             $data = json_decode($response);
             
-            $invitecode = $data->invite->code;
-            $invite = "https://www.onetap.com/account/scripts/invites/" . $invitecode . "/accept";
+            //$invitecode = $data->invite->code;
+            //$invite = "https://www.onetap.com/account/scripts/invites/" . $invitecode . "/accept";
             curl_close($curl);
             
             die('<div class="container">
             <div class="con4" style="height: 120px; width: 1000px;">
-            <h3 style="color: white; margin-top: 16px;">ATTENTION! Use it now or it expires: </h3> <input type="text" value="'.$invite.'" id="myInput">
-            <button onclick="myFunction()">Copy text</button><br>
+            <h3 style="color: white; margin-top: 16px;">Youre Subscription has been added!</h3>
             <a href="index.php">Home</a>
             </div>
-            </div> <script>
-            function myFunction() {
-              var copyText = document.getElementById("myInput");
-              copyText.select();
-              copyText.setSelectionRange(0, 99999)
-              document.execCommand("copy");
-              alert("Copied the text: " + copyText.value);
-            }
-            </script>');
+            </div>');
 
           }
         }	
