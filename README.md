@@ -10,7 +10,7 @@ The Main Page display the User Profile, News and Active Subscriptions.
 
 ![](495ee1f417f4e3938da58bd429e5b1f7.png)
 
-The Shop is fully automated and delivers the Invite Link to the Configs/Scripts immediatly.
+The Shop is fully automated and activates the Subscriptions to the products on Onetp automatically.
 
 ![](17e1bd28332d9d5c2ebecd32781e45f0.png)
 
@@ -29,9 +29,9 @@ webserver :) and Mysql db
 
 Setup 
 - Upload all files to ur document root
-- import the given db setup to ur phpmyadmin (capo.sql)
 - change all 3 DB creds and Onetap API Creds in db.php in the root
 - set the environement variables in (environement.php) -> You have to create a google recaptcha and insert these variabes https://www.google.com/recaptcha/admin/ (V2 Im not a robot)
+- go to to https://yourdomain.com/install.php and use the installation script to setup ur database
 - Register youre account and change youre rank in Users table to 100 so you have admin (admin panel) access
 - Now feel free to use youre admin panel to create products and news etc.
 
