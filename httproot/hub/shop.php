@@ -287,7 +287,7 @@ if ($type == "config") {
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://api.onetap.com/cloud/configs/'.$otid.'/subscriptions/?user_id=' . $otuser,
+  CURLOPT_URL => 'https://api.onetap.com/cloud/configs/' . $otid . '/subscriptions',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -295,7 +295,7 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
-  CURLOPT_POSTFIELDS => 'application%2Fx-www-form-urlencoded=&',
+  CURLOPT_POSTFIELDS => 'application%2Fx-www-form-urlencoded=&user_id=' . $otuser,
   CURLOPT_HTTPHEADER => array(
     'X-Api-Id: ' . $XApiId,
     'X-Api-Secret: ' . $XApiSecret,
@@ -324,7 +324,7 @@ die('<div class="container">
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-              CURLOPT_URL => 'https://api.onetap.com/cloud/scripts/'.$otid.'/subscriptions/?user_id=' . $otuser,
+              CURLOPT_URL => 'https://api.onetap.com/cloud/scripts/'.$otid.'/subscriptions',
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => '',
               CURLOPT_MAXREDIRS => 10,
@@ -332,7 +332,7 @@ die('<div class="container">
               CURLOPT_FOLLOWLOCATION => true,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => 'POST',
-              CURLOPT_POSTFIELDS => 'application%2Fx-www-form-urlencoded=&',
+              CURLOPT_POSTFIELDS => 'application%2Fx-www-form-urlencoded=&user_id=' . $otuser,
               CURLOPT_HTTPHEADER => array(
                 'X-Api-Id: ' . $XApiId,
                 'X-Api-Secret: ' . $XApiSecret,
